@@ -1,0 +1,127 @@
+{# src/OC/PlatformBundle/Resources/view/Advert/view.html.twig #}
+
+{% extends "OCPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ 'oc.advert.view.balisetitle'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block ocplatform_body %}
+
+    {# On vérifie qu'une image soit bien associée à l'annonce #}
+    {% if advert.image is not null %}
+
+        <img 
+            src="{{ advert.image.getRelativePath() | imagine_filter('image_medium') }}"
+            alt="{% if advert.image.alt is not null %}{{ advert.image.alt }}{% else %}{{ advert.title }}{% endif %}"
+            title="{% if advert.image.title is not null %}{{ advert.image.title }}{% else %}{{ advert.title }}{% endif %}"
+        />
+
+    {% endif %}
+
+    <h2>{{ advert.title }}</h2>
+
+    <i>{{ 'oc.advert.view.byanddate'|trans({'%author%': advert.user.username,'%date%': advert.date|date('d/m/Y')}) }}</i>
+
+    <div class="well">
+        {{ advert.content|purify }}
+    </div>
+
+    {% if advert.applications is not empty %}
+
+        <h2>{{ 'oc.advert.view.h2title'|trans }}</h2>
+
+        <ul>
+
+            {% for application in advert.applications %}
+
+                <li>
+
+                    {{ application.content }}
+
+                    {{ 'oc.application.byanddate'|trans({'%author%': advert.user.username,'%date%': advert.date|date('d/m/Y')}) }}
+                   {#  par {{ application.author }},
+
+                    le {{ application.date|date('d/m/Y') }} #}
+
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+        <br/>
+
+    {% endif %}
+
+
+    {% if advert.categories is not empty %}
+
+        <p>
+
+            <b>
+                {{ 'oc.advert.view.thisadvertisinthesecathegories'|trans }}
+            </b>
+
+            <br/>
+
+            {% for category in advert.categories %}
+
+                <i>{{ category.name }}</i>
+
+                {% if not loop.last %}, {% else %}.{% endif %}
+
+            {% endfor %}
+
+        </p>
+
+        <br/>
+
+    {% endif %}
+
+    {% if advert.skills is not empty %}
+
+        <p>
+
+            <b>
+                {{ 'oc.advert.view.thisadvertneedsskills'|trans }}
+            </b>
+
+            <br/>
+
+            {% for advertSkill in advert.skills %}
+
+                <i><u>{{ advertSkill.skill.name }}</u>, niveau requis : {{ advertSkill.level }}</i>
+
+                {% if not loop.last %}, {% else %}.{% endif %}
+
+                <br />
+
+            {% endfor %}
+
+        </p>
+
+        <br/>
+
+    {% endif %}
+
+    <p>
+        
+        <a href="{{ path('oc_platform_home') }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            {{ 'oc.advert.view.button.backtolistadvert'|trans }}
+        </a>
+
+        <a href="{{ path('oc_platform_edit', {'id': advert.id}) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-edit"></i>
+            {{ 'oc.advert.view.button.editthisadvert'|trans }}
+        </a>
+
+        <a href="{{ path('oc_platform_delete', {'id': advert.id}) }}" class="btn btn-danger">
+            <i class="glyphicon glyphicon-trash"></i>
+            {{ 'oc.advert.view.button.deletethisadvert'|trans }}
+        </a>
+
+    </p>
+
+{% endblock %}

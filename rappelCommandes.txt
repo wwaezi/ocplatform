@@ -1,0 +1,63 @@
+/*******************************/
+
+composer require --dev doctrine/doctrine-fixtures-bundle
+php bin/console doctrine:fixtures:load
+php bin/console doctrine:fixtures:load --append
+
+/*******************************/
+
+php bin/console generate:doctrine:entity
+php bin/console generate:doctrine:entities OCPlatformBundle:Advert
+
+/*******************************/
+
+php bin/console doctrine:database:drop --force
+php bin/console doctrine:database:create
+php bin/console doctrine:schema:update --force
+
+/*******************************/
+
+php bin/console debug:container
+
+/*******************************/
+
+php bin/console doctrine:generate:form OCPlatformBundle:Advert
+
+/*******************************/
+
+php ../composer.phar update
+php ../composer.phar install
+
+/*******************************/
+
+php bin/console fos:user:create
+
+/*******************************/
+
+php bin/console debug:router
+
+/*******************************/
+
+php bin/console debug:container --tag=twig.extension
+
+/*******************************/
+
+php bin/console assets:install web
+
+/*******************************/
+
+php bin/console generate:bundle
+
+Avant de continuer, je vous propose un petit nettoyage dans ce nouveauOCUserBundle, car le générateur a tendance à trop en faire. Vous pouvez donc supprimer allègrement :
+
+Le contrôleurController/DefaultController.php;
+Son répertoire de testsTests/Controller;
+Son répertoire de vuesResources/views/Default;
+Le fichier de routesResources/config/routing.yml ;
+La ligne d'import (oc_user) du fichier de routes dans le fichier app/config/routing.yml.
+
+/*******************************/
+
+php bin/console fos:user:create
+
+/*******************************/

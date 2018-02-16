@@ -1,0 +1,53 @@
+oc_platform_home:
+    path: /{page}
+    defaults: 
+        _controller: OCPlatformBundle:Advert:index
+        page: 1
+    requirements:
+        page: \d*
+
+oc_platform_view:
+    path: /annonce/{id}
+    defaults:   
+        _controller: OCPlatformBundle:Advert:view
+    requirements:
+        id: \d+
+
+oc_platform_add:
+    path: /ajouter-une-nouvelle-annonce
+    defaults:   
+        _controller: OCPlatformBundle:Advert:add
+
+oc_platform_edit:
+    path: /modifier/{id}
+    defaults:   
+        _controller: OCPlatformBundle:Advert:edit
+    requirements:
+        id: \d+
+
+oc_platform_delete:
+    path: /supprimer/{id}
+    defaults:   
+        _controller: OCPlatformBundle:Advert:delete
+    requirements:
+        id: \d+ 
+
+oc_platform_purge:
+    path: /purge/{days}
+    defaults:   
+        _controller: OCPlatformBundle:Advert:purge
+    requirements:
+        days: \d+
+
+oc_platform_purge_totale:
+    path: /purge-totale
+    defaults:   
+        _controller: OCPlatformBundle:Advert:purgeTotale
+
+oc_platform_categories:
+    path: /categories/{page}
+    defaults: 
+        _controller: OCPlatformBundle:Advert:categories
+        page: 1
+    requirements:
+        page: \d*

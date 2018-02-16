@@ -1,0 +1,71 @@
+{# src/OC/PlatformBundle/Resources/views/layout.html.twig #}
+
+{% extends "OCCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ 'oc.advert.maintitle'|trans }} - {{ parent() }}{% endblock %}
+
+{% block sidebar %}
+
+    <h4>{{ 'oc.advert.sidebar.title'|trans }}</h4>
+
+    <ul class="nav nav-pills nav-stacked">
+
+        <li>
+            <a href="{{ path('oc_platform_home') }}">
+                {{ 'oc.advert.sidebar.button.seealladverts'|trans }}
+            </a>
+        </li>
+
+        {% if is_granted('ROLE_USER') %}
+            <li>
+                <a href="{{ path('oc_platform_add') }}">
+                    {{ 'oc.advert.sidebar.button.addnewadvert'|trans }}
+                </a>
+            </li>
+        {% endif %}
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <li>
+                <a href="{{ path('oc_platform_purge', {'days': 2}) }}">
+                    {{ 'oc.advert.sidebar.button.purge'|trans }}
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('oc_platform_purge_totale') }}">
+                    {{ 'oc.advert.sidebar.button.purgetotale'|trans }}
+                </a>
+            </li>
+        {% endif %}
+
+    </ul>
+
+    <br/>
+
+    <h4>{{ 'oc.category.sidebar.title'|trans }}</h4>
+    
+    <ul class="nav nav-pills nav-stacked">
+        <li>
+            <a href="{{ path('oc_platform_categories') }}">
+                {{ 'oc.category.sidebar.button.seeallcathegories'|trans }}
+            </a>
+        </li>
+    </ul>
+
+    {# <h4>Dernières annonces</h4>
+
+    {{ render(controller("OCPlatformBundle:Advert:menu", {'limit': 3})) }} #}
+
+{% endblock %}
+
+{% block body %}
+
+    {# On définit un sous-titre commun à toutes les pages du bundle, par exemple #}
+    <h1>{{ 'oc.advert.maintitle'|trans }}</h1>
+
+    <hr>
+
+    {# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+    {% block ocplatform_body %}
+    {% endblock %}
+
+{% endblock %}

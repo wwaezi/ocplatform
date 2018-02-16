@@ -1,0 +1,54 @@
+{# src/OC/PlatformBundle/Resources/views/Advert/index.html.twig #}
+
+{% extends "OCPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ 'oc.advert.index.balisetitle'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block ocplatform_body %}
+
+    <h2>{{ 'oc.advert.index.title'|trans }}</h2>
+
+    <ul>
+
+        {% for advert in listAdverts %}
+
+            <li>
+
+                <a href="{{ path('oc_platform_view', {'id': advert.id}) }}">
+                    {{ advert.title }}
+                </a>
+
+                {{ 'oc.advert.index.byanddate'|trans({
+                        '%author%': advert.user.username,
+                        '%date%': advert.date|date('d/m/Y')
+                    })
+                }}
+
+                {% if advert.image is not null %}
+
+                    <span style="color:orange">
+                        <b>({{ 'oc.advert.index.withimage'|trans }})</b>
+                    </span>
+
+                {% endif %}
+
+            </li>
+
+        {% else %}
+
+            <li>{{ 'oc.advert.index.notyetadvert'|trans }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+    <br />
+
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(listAdverts) }}
+    </div>
+
+{% endblock %}
